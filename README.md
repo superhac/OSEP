@@ -34,7 +34,7 @@ python aes-encode.py --key 777456789abcdety --format csharp --file shell.raw
 
 ## dinvoke-pinject-aes.cs
 
-Same as above except it uses process injection.  Default is "explorer". 
+Same as above except it uses process injection.  Default is "explorer". This is based on the work of [FatCyclone D/Invoke in C#](https://github.com/FatCyclone/D-Pwn) with the AV bypasses stripped and I added AES128 ECB encryption.
 
 ## aes-encrypt.py
 
