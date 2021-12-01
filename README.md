@@ -32,6 +32,10 @@ python aes-encode.py --key 777456789abcdety --format csharp --file shell.raw
 
 *As of 11/30/2021 this passes Defender*
 
+## dinvoke-pinject-aes.cs
+
+Same as above except it uses process injection.  Default is "explorer". 
+
 ## aes-encrypt.py
 
 Use this to encrypt you payloads with AES 128 ECB.  
